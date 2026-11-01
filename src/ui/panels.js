@@ -19,6 +19,7 @@ const IDS = {
   cancel: `${PREFIX}cancel`,
   remove: `${PREFIX}remove`,
   removeConfirm: `${PREFIX}remove-confirm`,
+  unregister: `${PREFIX}unregister`,
 };
 
 const COLORS = {
@@ -169,6 +170,7 @@ function statusPanel({ plans, summary }, cfg, { inviteUrl } = {}) {
     button(IDS.refresh, 'Refresh', ButtonStyle.Secondary),
   ];
   if (summary.owned > 0) buttons.push(button(IDS.remove, 'Remove rules', ButtonStyle.Danger));
+  buttons.push(button(IDS.unregister, 'Delete command', ButtonStyle.Secondary, summary.verdict !== 'met'));
   if (inviteUrl && (summary.verdict === 'insufficient' || summary.verdict === 'marginal')) {
     buttons.push(new ButtonBuilder().setLabel('Add bot to a server').setStyle(ButtonStyle.Link).setURL(inviteUrl));
   }
