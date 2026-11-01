@@ -55,7 +55,7 @@ DISCORD_TOKEN=your bot token
 CLIENT_ID=your application id
 ```
 
-Register the command once, then start the bot:
+Add the command once, then start the bot. This only adds `/badge` and never touches the other commands of the bot:
 
 ```bash
 npm run deploy
@@ -77,8 +77,11 @@ Run `/badge`. Only the bot owner can use it, and the reply is visible only to yo
 | Cancel | Stops a running job after the current request |
 | Remove rules | Deletes the rules the bot created (asks for confirmation) |
 | Add bot to a server | Opens an invite link when more servers are needed |
+| Delete command | Enabled only after the target is reached. Deletes `/badge` from the bot, other commands stay |
 
 After the target is reached, keep the rules and wait for the badge. Removing them may remove the badge.
+
+To remove the command without the panel, run `npm run undeploy`.
 
 ## Configuration
 
