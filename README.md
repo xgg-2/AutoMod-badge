@@ -42,7 +42,7 @@ With the defaults (6 rules per server, target 100, safety margin 10 percent):
 ## Setup
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/xgg-2/AutoMod-badge.git
 cd automod-badge-bot
 npm install
 cp .env.example .env
