@@ -11,10 +11,12 @@ const logger = require('../utils/logger');
 const { createThrottle } = require('../utils/throttle');
 const { planGuild, summarize } = require('../services/planner');
 const { runTasks } = require('../services/runner');
+const { removeCommand } = require('../services/commands');
 const { inspectAll, createRule, collectOwnedRules, deleteRule } = require('../services/rules');
 const {
   PREFIX,
   IDS,
+  COLORS,
   statusPanel,
   progressPanel,
   createResultPanel,
@@ -152,6 +154,39 @@ async function startRemove(interaction, ctx) {
   }
 }
 
+async function deleteSelf(interaction, ctx) {
+  if (state.busy) return interaction.editReply(await statusPayload(ctx));
+
+  const status = await buildStatus(ctx);
+  if (status.summary.verdict !== 'met') {
+    return interaction.editReply(
+      noticePanel(
+        'Not finished yet',
+        `The command can be deleted only after the bot owns ${ctx.cfg.targetRules} rules ` +
+          `(now ${status.summary.owned}). Nothing was deleted.`,
+      ),
+    );
+  }
+
+  try {
+    const removed = await removeCommand(ctx.client.rest, ctx.client.application.id, data.name);
+    logger.info(removed ? 'Deleted the /badge command.' : 'The /badge command was already gone.');
+    return await interaction.editReply(
+      noticePanel(
+        'Command deleted',
+        'The /badge command was removed. Other commands of this bot were not touched. ' +
+          'Run `npm run deploy` to add it back.',
+        { color: COLORS.green, withRefresh: false },
+      ),
+    );
+  } catch (err) {
+    logger.error('Command deletion failed', err);
+    return interaction
+      .editReply(noticePanel('Deletion failed', 'Check the bot logs, then press Refresh.'))
+      .catch(() => {});
+  }
+}
+
 async function execute(interaction, ctx) {
   await interaction.deferReply({ flags: MessageFlags.Ephemeral });
   await interaction.editReply(await statusPayload(ctx));
@@ -172,6 +207,8 @@ async function handleComponent(interaction, ctx) {
       return confirmRemove(interaction, ctx);
     case IDS.removeConfirm:
       return startRemove(interaction, ctx);
+    case IDS.unregister:
+      return deleteSelf(interaction, ctx);
     default:
       return undefined;
   }
