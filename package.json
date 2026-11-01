@@ -1,0 +1,19 @@
+{
+  "name": "automod-badge-bot",
+  "version": "2.0.0",
+  "description": "Checks server capacity and creates the AutoMod rules a Discord bot needs for the Uses AutoMod badge.",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy": "node src/deploy-commands.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "dotenv": "^16.4.5"
+  }
+}
