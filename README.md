@@ -70,6 +70,34 @@ Never commit `.env` or share your token. If it leaks, reset it in the Developer 
 
 Run `/badge`. Only the bot owner can use it, and the reply is visible only to you.
 
+### What you will see
+
+**Status panel.** It shows the servers, the rules that can be created and whether the target is reachable. Press Start to begin.
+
+<p align="center">
+  <img src="assets/screenshots/status.png" width="480" alt="Status panel before starting">
+</p>
+
+**Progress.** Rules are created one at a time. Cancel stops the job after the current request.
+
+<p align="center">
+  <img src="assets/screenshots/progress.png" width="480" alt="Progress while creating rules">
+</p>
+
+**Result.** When the run ends, the panel shows the real total after a recount.
+
+<p align="center">
+  <img src="assets/screenshots/finished.png" width="480" alt="Run finished panel">
+</p>
+
+**Requirement already met.** Running `/badge` again after the target is reached shows this panel. Servers that cannot receive rules are listed under Skipped servers.
+
+<p align="center">
+  <img src="assets/screenshots/met.png" width="480" alt="Requirement already met panel">
+</p>
+
+Buttons:
+
 | Button | Action |
 | --- | --- |
 | Start | Creates the missing rules, with progress |
